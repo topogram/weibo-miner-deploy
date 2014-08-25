@@ -1,10 +1,12 @@
+import os
 from fabric.api import *
+from fabric.contrib.console import confirm
+from fabric.contrib import files
+
 import debian
 import miner
 import ui
-import os
-from fabric.contrib.console import confirm
-from fabric.contrib import files
+import data
 
 CODE_DIR="/home/topo/"
 DEPLOY_FILES_DIR=os.path.join(CODE_DIR,"topogram-deploy")
@@ -38,10 +40,10 @@ def local_info():
 def hostconfig():
     debian.apt_upgrade()
     debian.install_git()
+    debian.install_libs()
     debian.install_mongodb()
     debian.install_nodejs()
     debian.install_elasticsearch()
-    debian.install_libs()
     debian.install_npm_global()
     debian.install_virtualenv()
 
@@ -66,6 +68,13 @@ def config_files():
 def setup_ui():
     ui.init_dir()
     ui.create_config_file()
+
+def setup_data():
+  data.init_dir()
+  # data.download_weiboscope_sample()
+  # data.build_index()
+  # data.download_weiboscope_all()
+  data.build_user_api()
 
 def ui_dev_start():
     ui.dev_start()

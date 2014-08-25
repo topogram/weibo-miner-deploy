@@ -56,16 +56,30 @@ def install_nodejs():
       # run("rm install.sh")
 
 def install_elasticsearch():
-  with cd("/tmp"):
-    run("wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.deb")
-    sudo("dpkg -i elasticsearch-1.3.2.deb ")
-    # run("rm elasticsearch-1.3.2.deb")
+  apt_install("")
 
-    # start es by default
-    #sudo update-rc.d elasticsearch defaults 95 10
+  # with cd("/tmp"):
+  #   run("wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.deb")
+    # sudo("dpkg -i elasticsearch-1.3.2.deb ")
+
+  if not files.exists('/usr/share/elasticsearch/config'):
+    sudo("ln -s /etc/elasticsearch /usr/share/elasticsearch/config")
+    sudo(" echo 'path.logs: /usr/share/elasticsearch/logs' >>  /etc/elasticsearch/elasticsearch.yml ")
+
+  # install plugins
+  if not files.exists('/usr/share/elasticsearch/plugins/head'):
+    sudo ("/usr/share/elasticsearch/bin/plugin -install mobz/elasticsearch-head")
+
+  if not files.exists('/usr/share/elasticsearch/plugins/analysis-smartcn'):
+    sudo ("/usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-analysis-smartcn/2.1.0")
+
+  sudo("service elasticsearch start")
+  sudo("service elasticsearch status")
+
 
 def install_libs():
-  apt_install("install python-dev libzmq-dev libevent-dev python-setuptools python-pip python-zmq")
+  apt_install("install python-dev libzmq-dev libevent-dev python-setuptools python-pip python-zmq curl openjdk-7-jdk")
+  sudo(" update-alternatives --config java")
 
 def install_npm_global():
   run("npm -g install bower supervisor forever")
