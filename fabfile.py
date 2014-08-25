@@ -1,6 +1,6 @@
 from fabric.api import *
 import debian
-import app
+import miner
 import ui
 import os
 from fabric.contrib.console import confirm
@@ -41,12 +41,17 @@ def hostconfig():
     debian.install_mongodb()
     debian.install_nodejs()
     debian.install_elasticsearch()
+    debian.install_libs()
     debian.install_npm_global()
+    debian.install_virtualenv()
 
-def python_setup():
-    app.install_virtualenv()
-    app.create_virtual_env()
-    app.install_zeroRPC()
+def setup_miner():
+    miner.init_dir()
+    # miner.update_requirements()
+    # miner.install_zeroRPC()
+
+def miner_dev_start():
+    miner.dev_run()
 
 def config_files():
     if not files.exists(DEPLOY_FILES_DIR):

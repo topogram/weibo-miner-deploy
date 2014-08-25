@@ -64,8 +64,18 @@ def install_elasticsearch():
     # start es by default
     #sudo update-rc.d elasticsearch defaults 95 10
 
+def install_libs():
+  apt_install("install python-dev libzmq-dev libevent-dev python-setuptools python-pip python-zmq")
+
 def install_npm_global():
   run("npm -g install bower supervisor forever")
+
+  if not files.exists('/usr/local/bin/zerorpc'):
+    install_libs()
+
+  run("npm install -g zerorpc")
+
+
 
 def upstart(appname, script, force=False, location_dir="/tmp", home="/root", user="root", description="Node.js server App"):
   dst="/etc/init/%s.conf" % appname
@@ -85,3 +95,9 @@ def upstart(appname, script, force=False, location_dir="/tmp", home="/root", use
     sudo("chown root:root %s" % dst)
     sudo("touch %s" % logfile)
     sudo("chown %(user)s:%(user)s %(logfile)s" % context)
+
+def install_virtualenv():
+    sudo_pip_install('virtualenv')
+    
+def sudo_pip_install(packages):
+    sudo("pip install %s" % packages)
