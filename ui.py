@@ -1,10 +1,14 @@
 from fabric.api import *
 from fabric.contrib import files
 import debian
+import os
 
 UI_GITHUB_REP="https://github.com/topogram/topogram-ui.git"
+
 CODE_DIR="/home/topo/"
-UI_DIR=CODE_DIR+"topogram-ui"
+CONFIG_DIR=os.path.join(CODE_DIR,"config")
+UI_DIR=os.path.join(CODE_DIR,"topogram-ui")
+UI_CONFIG_DIR=os.path.join(UI_DIR, "config")
 
 def init_dir():
     if not files.exists(UI_DIR):
@@ -32,5 +36,5 @@ def dev_start():
         run("./dev_start.sh")
 
 def create_config_file():
-    with cd(UI_DIR):
-        run('cp config/config.json.sample config/config.json')
+    if files.exists(CONFIG_DIR) and not files.exists(UI_CONFIG_DIR) :
+        run('ln -s %s %s' % (CONFIG_DIR, UI_CONFIG_DIR))

@@ -52,11 +52,11 @@ def config_files():
     if not files.exists(DEPLOY_FILES_DIR):
         run("git clone %s" % CONFIG_GITHUB_REP )
 
-    if not files.exists(CONFIG_DIR):
-        run("ln -s %sconfig %s" % (DEPLOY_FILES_DIR,CONFIG_DIR))
-
     with cd(DEPLOY_FILES_DIR):
         git_pull()
+
+    if not files.exists(CONFIG_DIR):
+        run("ln -s %s/config %s" % (DEPLOY_FILES_DIR,CONFIG_DIR))
 
 def setup_ui():
     ui.init_dir()
