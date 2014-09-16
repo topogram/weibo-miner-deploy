@@ -9,7 +9,6 @@ Tested on debian Wheezy. You will need openSSH server and mail
     pip install fabric fabric-virtualenv
     fab staging ssh         # setup ssh remote key
     fab staging hostconfig  # setup tools
-    
 
     fab staging uptime
 
