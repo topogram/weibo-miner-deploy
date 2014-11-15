@@ -77,7 +77,6 @@ def install_elasticsearch():
   sudo("service elasticsearch start")
   # sudo("service elasticsearch status")
 
-
 def install_libs():
   apt_install("install python-dev libzmq-dev libevent-dev python-setuptools python-pip python-zmq curl openjdk-7-jdk")
   sudo(" update-alternatives --config java")
@@ -89,27 +88,32 @@ def install_npm_global():
   #   install_libs()
   # run("npm install -g zerorpc")
 
-def upstart(appname, script, force=False, location_dir="/tmp", home="/root", user="root", description="Node.js server App"):
-  dst="/etc/init/%s.conf" % appname
-  logfile="/var/log/%s.log" % appname
-  context = {'appname':appname
-        , 'script':script
-        , 'logfile':logfile
-        , 'location_dir':location_dir
-        , 'home':home
-        , 'user':user
-        , 'description':description}
-  if not files.exists(dst) or force:
-    files.upload_template('upstart.template'
-      , dst
-      , use_sudo=True
-      , context=context)
-    sudo("chown root:root %s" % dst)
-    sudo("touch %s" % logfile)
-    sudo("chown %(user)s:%(user)s %(logfile)s" % context)
-
 def install_virtualenv():
     sudo_pip_install('virtualenv')
     
 def sudo_pip_install(packages):
     sudo("pip install %s" % packages)
+
+def install_nginx():
+  apt_install("nginx")
+  sudo("service nginx start")
+
+
+# def upstart(appname, script, force=False, location_dir="/tmp", home="/root", user="root", description="Node.js server App"):
+#   dst="/etc/init/%s.conf" % appname
+#   logfile="/var/log/%s.log" % appname
+#   context = {'appname':appname
+#         , 'script':script
+#         , 'logfile':logfile
+#         , 'location_dir':location_dir
+#         , 'home':home
+#         , 'user':user
+#         , 'description':description}
+#   if not files.exists(dst) or force:
+#     files.upload_template('upstart.template'
+#       , dst
+#       , use_sudo=True
+#       , context=context)
+#     sudo("chown root:root %s" % dst)
+#     sudo("touch %s" % logfile)
+#     sudo("chown %(user)s:%(user)s %(logfile)s" % context)

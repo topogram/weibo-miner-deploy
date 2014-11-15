@@ -64,8 +64,6 @@ def build_user_api():
     with virtualenv(VIRTUALENV_PATH):
         run("python %s %s" % (os.path.join(DATA_DIR,"utils_build_user_api.py"),os.path.join(RAW_DATA_DIR,"userdata.zip")))
 
-
-
 def git_pull():
     run("git pull")
 
