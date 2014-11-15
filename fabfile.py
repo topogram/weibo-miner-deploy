@@ -3,6 +3,7 @@ from fabric.api import *
 from fabric.contrib.console import confirm
 from fabric.contrib import files
 
+from config.servers import staging, prod
 import debian
 import miner
 import ui
@@ -14,18 +15,8 @@ CONFIG_DIR=os.path.join(CODE_DIR,"config")
 
 CONFIG_GITHUB_REP="https://github.com/topogram/topogram-deploy.git"
 
-def staging():
-    env.hosts = ['127.0.0.1']
-    env.user  = 'topo'
-    env.remote_admin  = 'topo'
-    env.port="3022"
- 
 def uptime():
     run('uptime')
-
-def production():
-    env.hosts = ['X.X.X.X']
-    env.remote_admin  = 'xxx'
 
 def ssh():
   for host in env.hosts:
@@ -42,10 +33,10 @@ def hostconfig():
     debian.install_git()
     debian.install_libs()
     debian.install_mongodb()
-    debian.install_nodejs()
     debian.install_elasticsearch()
-    debian.install_npm_global()
     debian.install_virtualenv()
+    debian.install_nodejs()
+    debian.install_npm_global()
 
 def setup_miner():
     miner.init_dir()
@@ -74,7 +65,7 @@ def setup_data():
   # data.download_weiboscope_sample()
   # data.build_index()
   # data.download_weiboscope_all()
-  data.build_user_api()
+  # data.build_user_api()
 
 def ui_dev_start():
     ui.dev_start()

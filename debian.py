@@ -58,9 +58,10 @@ def install_nodejs():
 def install_elasticsearch():
   apt_install("")
 
-  # with cd("/tmp"):
-  #   run("wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.deb")
-    # sudo("dpkg -i elasticsearch-1.3.2.deb ")
+  if not sudo("service elasticsearch status"):
+    with cd("/tmp"):
+      run("wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.deb")
+      sudo("dpkg -i elasticsearch-1.3.2.deb ")
 
   if not files.exists('/usr/share/elasticsearch/config'):
     sudo("ln -s /etc/elasticsearch /usr/share/elasticsearch/config")
@@ -74,7 +75,7 @@ def install_elasticsearch():
     sudo ("/usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-analysis-smartcn/2.1.0")
 
   sudo("service elasticsearch start")
-  sudo("service elasticsearch status")
+  # sudo("service elasticsearch status")
 
 
 def install_libs():
@@ -84,12 +85,9 @@ def install_libs():
 def install_npm_global():
   run("npm -g install bower supervisor forever")
 
-  if not files.exists('/usr/local/bin/zerorpc'):
-    install_libs()
-
-  run("npm install -g zerorpc")
-
-
+  # if not files.exists('/usr/local/bin/zerorpc'):
+  #   install_libs()
+  # run("npm install -g zerorpc")
 
 def upstart(appname, script, force=False, location_dir="/tmp", home="/root", user="root", description="Node.js server App"):
   dst="/etc/init/%s.conf" % appname

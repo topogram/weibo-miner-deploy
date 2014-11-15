@@ -43,5 +43,3 @@ Tested on Debian Wheezy
     python 2.7
     MongoDB
     elasticsearch
-
-
