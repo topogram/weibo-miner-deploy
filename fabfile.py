@@ -5,10 +5,8 @@ from fabric.contrib import files
 
 from config.servers import staging, prod
 import debian
-import miner
-import ui
-import data
 import main
+import nginx
 
 CODE_DIR="/home/topo/"
 DEPLOY_FILES_DIR=os.path.join(CODE_DIR,"topogram-deploy")
@@ -41,10 +39,16 @@ def hostconfig():
     debian.install_nodejs()
     debian.install_npm_global()
     debian.install_nginx()
+    debian.install_supervisor()
+    debian.install_uwsgi()
 
 def topogram_setup():
-    main.setup_topogram()
+    # main.setup_topogram()
+    nginx.init_deploy()
 
+def deploy():
+    main.update()
+    nginx.deploy()
 
 
 ## functions

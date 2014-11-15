@@ -1,0 +1,16 @@
+import os
+
+MAIN_GITHUB_REP="https://github.com/topogram/topogram.git"
+
+HOME_DIR="/home/XXX/"
+LOG_DIR=os.path.join(HOME_DIR,"log")
+CODE_DIR=os.path.join(HOME_DIR,"topogram")
+
+VIRTUALENV_PATH=os.path.join(HOME_DIR,'env')
+CONFIG_DIR=os.path.join(HOME_DIR,"config")
+VHOST_NAME = 'app.topogram.io'
+STATIC = os.path.join(CODE_DIR,'app/static')
+
+RUN_DIR=os.path.join(HOME_DIR,"run")
+USGWI_SOCKET=os.path.join(RUN_DIR,"topogram.sock")
+TOPOGRAM_PID=os.path.join(RUN_DIR,"topogram.pid")

@@ -3,15 +3,15 @@ server {
         server_name     {{ domain }};
         root            {{ root }};
  
-        access_log      {{ root }}/access.log;
-        error_log       {{ root }}/error.log;
+        access_log      {{ log }}/access.log;
+        error_log       {{ log }}/error.log;
  
         location / {
-                uwsgi_pass      unix:///{{ root }}/uwsgi.sock;
+                uwsgi_pass      unix:///{{ socket }};
                 include         uwsgi_params;
         }
  
         location /static {
-                alias           {{ root }}/{{ static }};
+                alias           {{ static }};
         }
 }

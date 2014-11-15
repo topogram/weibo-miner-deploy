@@ -1,6 +1,8 @@
 from fabric.api import *
 from fabric.contrib import files
 
+from config.settings import RUN_DIR
+
 SOURCES_D="/etc/apt/sources.list.d"
 
 __all__= ['cmd_exists', 'apt', 'apt_upgrade']
@@ -38,6 +40,8 @@ def install_mongodb():
           apt_install("mongodb-org")
 
 def install_nodejs():
+  run("source ~/.bashrc")
+
   if not cmd_exists('node'):
     with cd("/tmp"):
       # get nvm
@@ -97,6 +101,15 @@ def sudo_pip_install(packages):
 def install_nginx():
   apt_install("nginx")
   sudo("service nginx start")
+
+def install_supervisor():
+  apt_install("supervisor")
+
+def install_uwsgi():
+  apt_install("uwsgi")
+  if not files.exists(RUN_DIR):
+    sudo("mkdir -p %s"%RUN_DIR)
+  sudo('chown www-data:www-data %s'%RUN_DIR)
 
 
 # def upstart(appname, script, force=False, location_dir="/tmp", home="/root", user="root", description="Node.js server App"):
