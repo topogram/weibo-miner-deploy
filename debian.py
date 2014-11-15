@@ -106,7 +106,7 @@ def install_supervisor():
   apt_install("supervisor")
 
 def install_uwsgi():
-  apt_install("uwsgi")
+  sudo("pip install uwsgi")
   if not files.exists(RUN_DIR):
     sudo("mkdir -p %s"%RUN_DIR)
   sudo('chown www-data:www-data %s'%RUN_DIR)
