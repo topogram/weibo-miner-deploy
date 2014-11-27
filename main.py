@@ -17,13 +17,24 @@ def create_config_files():
 
             run('ln -s %s %s' % (os.path.join(CONFIG_DIR,"config.py"), os.path.join(CODE_DIR, "config.py")))
 
+def create_uploads_dir():
+    run("mkdir -p %s"%UPLOADS_DIR)
+
+def create_db_dir():
+    run("mkdir -p %s"%DB_DIR)
+
 def create_virtual_env():
     if not files.exists(VIRTUALENV_PATH):
         make_virtualenv(VIRTUALENV_PATH)
 
 def setup_topogram():
+    update_code_from_git()
     create_config_files()
     create_virtual_env()
+    update_requirements()
+    create_uploads_dir()
+    if not files.exists(DB_DIR):
+        create_db()
     update()
 
 def update():
@@ -36,9 +47,9 @@ def update_code_from_git():
     """ download latest version of the code from git """
     if not files.exists(CODE_DIR):
         run("git clone %s" % MAIN_GITHUB_REP )
+
     with cd(CODE_DIR):
         git_pull()
-    update_requirements()
 
 def update_requirements():
     """ update external dependencies on remote host """
@@ -52,9 +63,15 @@ def bower_install():
     with cd(CODE_DIR):
         run("bower install")
 
+def create_db():
+    create_db_dir()
+    with virtualenv(VIRTUALENV_PATH):
+        run("python %s" % os.path.join(CODE_DIR,"manage.py db init"))
+
 def update_db():
     with virtualenv(VIRTUALENV_PATH):
-        run("python %s" % os.path.join(CODE_DIR,"db_create.py"))
+        run("python %s" % os.path.join(CODE_DIR,"manage.py db migrate"))
+        run("python %s" % os.path.join(CODE_DIR,"manage.py db upgrade"))
 
 def dev_run():
   update()

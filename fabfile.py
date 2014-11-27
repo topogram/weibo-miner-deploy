@@ -30,19 +30,19 @@ def git_pull():
     run("git pull")
 
 def hostconfig():
-    # debian.apt_upgrade()
-    # debian.install_git()
-    # debian.install_libs()
-    # debian.install_mongodb()
-    # debian.install_elasticsearch()
-    # debian.install_virtualenv()
-    # debian.install_nodejs()
-    # debian.install_npm_global()
-    # debian.install_nginx()
-    # debian.install_supervisor()
+    debian.apt_upgrade()
+    debian.install_git()
+    debian.install_libs()
+    debian.install_mongodb()
+    debian.install_elasticsearch()
+    debian.install_virtualenv()
+    debian.install_nodejs()
+    debian.install_npm_global()
+    debian.install_nginx()
+    debian.install_supervisor()
     debian.install_uwsgi()
 
-def topogram_setup():
+def setup_topogram():
     main.setup_topogram()
     nginx.init_deploy()
 

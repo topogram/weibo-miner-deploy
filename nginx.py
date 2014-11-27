@@ -68,15 +68,16 @@ def reload_webserver():
     sudo("/etc/init.d/nginx reload")
 
 def reload_supervisor():
-    sudo('service supervisor restart')
+    sudo('supervisorctl restart')
 
 def start_app():
-    sudo('service supervisor start %s' % VHOST_NAME)
+    sudo('supervisorctl start %s' % VHOST_NAME)
 
 def reload_app(touch=True):
     if touch:
         with cd(APP_ROOT):
             run('touch app.wsgi')
+        start_app()
     else:
         sudo('supervisorctl restart %s' % VHOST_NAME)
 
