@@ -40,15 +40,24 @@ def hostconfig():
     debian.install_npm_global()
     debian.install_nginx()
     debian.install_supervisor()
-    debian.install_uwsgi()
+    # debian.install_uwsgi()
+    debian.install_mysql()
+    debian.install_redis()
 
 def setup_topogram():
     main.setup_topogram()
     nginx.init_deploy()
 
+def config_server():
+    nginx.init_deploy()
+    # nginx.init_deploy_with_socketio()
+
 def deploy():
     main.update()
-    nginx.deploy()
+    nginx.restart_app()
+
+def restart():
+    nginx.restart()
 
 ## functions
 def run_test():
@@ -68,6 +77,15 @@ def prepare_deploy():
     commit()
     push()
 
+
+def install_test():
+    main.install_gunicorn()
+    nginx.make_gunicorn_config()
+    nginx.make_supervisor_conf()
+    nginx.restart_app()
+    
+    nginx.make_nginx_vhost()
+    nginx.reload_webserver()
 
 """
 def setup_miner():

@@ -20,8 +20,8 @@ def create_config_files():
 def create_uploads_dir():
     run("mkdir -p %s"%UPLOADS_DIR)
 
-def create_db_dir():
-    run("mkdir -p %s"%DB_DIR)
+# def create_db_dir():
+#     run("mkdir -p %s"%DB_DIR)
 
 def create_virtual_env():
     if not files.exists(VIRTUALENV_PATH):
@@ -33,9 +33,11 @@ def setup_topogram():
     create_virtual_env()
     update_requirements()
     create_uploads_dir()
-    if not files.exists(DB_DIR):
+    # if not files.exists(DB_DIR): # for SQLite
+    if not files.exists(DB_PATH):
         create_db()
     update()
+    install_gunicorn()
 
 def update():
     update_code_from_git()
@@ -64,13 +66,12 @@ def bower_install():
         run("bower install")
 
 def create_db():
-    create_db_dir()
+    # create_db_dir()
     with virtualenv(VIRTUALENV_PATH):
-        run("python %s" % os.path.join(CODE_DIR,"manage.py db init"))
+        run("python %s" % os.path.join(CODE_DIR,"manage.py db upgrade"))
 
 def update_db():
     with virtualenv(VIRTUALENV_PATH):
-        run("python %s" % os.path.join(CODE_DIR,"manage.py db migrate"))
         run("python %s" % os.path.join(CODE_DIR,"manage.py db upgrade"))
 
 def dev_run():
@@ -80,3 +81,8 @@ def dev_run():
 
 def git_pull():
     run("git pull")
+
+def install_gunicorn():
+  with virtualenv(VIRTUALENV_PATH):
+    run("pip install gunicorn==0.16.1")
+  

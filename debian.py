@@ -62,7 +62,7 @@ def install_nodejs():
 def install_elasticsearch():
   apt_install("")
 
-  if not sudo("service elasticsearch status"):
+  if not files.exists('/usr/share/elasticsearch/config'):
     with cd("/tmp"):
       run("wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.deb")
       sudo("dpkg -i elasticsearch-1.3.2.deb ")
@@ -85,6 +85,12 @@ def install_libs():
   apt_install("install python-dev libzmq-dev libevent-dev python-setuptools python-pip python-zmq curl openjdk-7-jdk")
   sudo(" update-alternatives --config java")
 
+def install_mysql():
+  apt_install("python-mysqldb libmysqlclient-dev mysql-server")
+
+def install_redis():
+  apt_install("redis-server")
+
 def install_npm_global():
   run("npm -g install bower supervisor forever")
 
@@ -99,8 +105,18 @@ def sudo_pip_install(packages):
     sudo("pip install %s" % packages)
 
 def install_nginx():
-  apt_install("nginx")
-  sudo("service nginx start")
+    # apt_install("nginx")
+      with cd("/etc/apt/sources.list.d"):
+          sudo("touch nginx.list")
+          sudo("echo deb http://nginx.org/packages/debian/ wheezy nginx >>  nginx.list")
+          sudo("echo  deb-src http://nginx.org/packages/debian/ wheezy  nginx >>   nginx.list")
+
+      apt_update()
+      apt_install("nginx")
+
+      
+      # sudo("dpkg -i nginx*")
+      # sudo("service nginx start")
 
 def install_supervisor():
   apt_install("supervisor")
@@ -110,23 +126,3 @@ def install_uwsgi():
   if not files.exists(RUN_DIR):
     sudo("mkdir -p %s"%RUN_DIR)
   sudo('chown www-data:www-data %s'%RUN_DIR)
-
-
-# def upstart(appname, script, force=False, location_dir="/tmp", home="/root", user="root", description="Node.js server App"):
-#   dst="/etc/init/%s.conf" % appname
-#   logfile="/var/log/%s.log" % appname
-#   context = {'appname':appname
-#         , 'script':script
-#         , 'logfile':logfile
-#         , 'location_dir':location_dir
-#         , 'home':home
-#         , 'user':user
-#         , 'description':description}
-#   if not files.exists(dst) or force:
-#     files.upload_template('upstart.template'
-#       , dst
-#       , use_sudo=True
-#       , context=context)
-#     sudo("chown root:root %s" % dst)
-#     sudo("touch %s" % logfile)
-#     sudo("chown %(user)s:%(user)s %(logfile)s" % context)
