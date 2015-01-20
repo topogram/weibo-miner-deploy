@@ -10,10 +10,10 @@ Tested on debian Wheezy. You will need openSSH server and mail
     fab staging ssh         # setup ssh remote key
     fab staging hostconfig  # setup tools
     
-
+    # update the config file in "config/config.py" 
     fab staging setup_topogram  # update code and dependencies
 
-    fab staging uptime
+    fab staging deploy
 
 
 ### Virtual Box

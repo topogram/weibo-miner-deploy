@@ -49,8 +49,12 @@ def setup_topogram():
     nginx.init_deploy()
 
 def config_server():
-    nginx.init_deploy()
-    # nginx.init_deploy_with_socketio()
+    main.update_code_from_git()
+    main.create_config_files()
+    nginx.make_supervisor_conf()
+    nginx.make_rqworker_supervisor_conf()
+    nginx.restart_worker()
+    nginx.restart_app()
 
 def deploy():
     main.update()
