@@ -104,21 +104,19 @@ def start_app():
     sudo('supervisorctl start %s' % VHOST_NAME)
 
 def restart_app():
-    sudo('supervisorctl restart %s' % VHOST_NAME)
+    sudo("killall gunicorn")
+    sudo('supervisorctl start %s' % VHOST_NAME)
 
 def reload_app(touch=True):
-    if touch:
-        with cd(APP_ROOT):
-            run('touch app.wsgi')
-        # start_app()
-    else:
-        sudo('supervisorctl restart %s' % VHOST_NAME)
+    sudo("killall gunicorn")
+    start_app()
+
 
 def init_deploy():
     make_nginx_vhost()
     make_gunicorn_config()
     make_supervisor_conf()
-
+    make_rqworker_supervisor_conf()
     reload_webserver()
     start_worker()
     start_app()
@@ -134,6 +132,6 @@ def deploy():
     reload_app()
 
 def restart():
-    restart_worker()
+    # restart_worker()
     reload_supervisor()
     reload_webserver()

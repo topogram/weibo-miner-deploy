@@ -20,6 +20,7 @@ def uptime():
 def ssh():
   for host in env.hosts:
         local("ssh-copy-id -p %s %s@%s" % (env.port, env.remote_admin, host))
+
 def remote_info():
     run('uname -a')
 
@@ -34,7 +35,7 @@ def hostconfig():
     debian.install_git()
     debian.install_libs()
     debian.install_mongodb()
-    debian.install_elasticsearch()
+    # debian.install_elasticsearch()
     debian.install_virtualenv()
     debian.install_nodejs()
     debian.install_npm_global()
@@ -44,7 +45,7 @@ def hostconfig():
     debian.install_mysql()
     debian.install_redis()
 
-def setup_topogram():
+def setup():
     main.setup_topogram()
     nginx.init_deploy()
 
@@ -75,11 +76,6 @@ def commit():
 
 def push():
     local("git push")
-
-def prepare_deploy():
-    test()
-    commit()
-    push()
 
 
 def install_test():

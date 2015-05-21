@@ -82,8 +82,8 @@ def install_elasticsearch():
   # sudo("service elasticsearch status")
 
 def install_libs():
-  apt_install("install python-dev libzmq-dev libevent-dev python-setuptools python-pip python-zmq curl openjdk-7-jdk")
-  sudo(" update-alternatives --config java")
+  apt_install("install python-dev libevent-dev python-setuptools python-pip")
+  # sudo(" update-alternatives --config java")
 
 def install_mysql():
   apt_install("python-mysqldb libmysqlclient-dev mysql-server")

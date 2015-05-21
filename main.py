@@ -19,6 +19,7 @@ def create_config_files():
 
 def create_uploads_dir():
     run("mkdir -p %s"%UPLOADS_DIR)
+    sudo("chown -R www-data:www-data %s"%UPLOADS_DIR)
 
 # def create_db_dir():
 #     run("mkdir -p %s"%DB_DIR)
@@ -29,6 +30,7 @@ def create_virtual_env():
 
 def create_pid_dir():
     run("mkdir -p %s"%RUN_DIR)
+    sudo("chown -R www-data:www-data %s"%RUN_DIR)
 
 def setup_topogram():
     update_code_from_git()
@@ -36,6 +38,7 @@ def setup_topogram():
     create_virtual_env()
     update_requirements()
     create_uploads_dir()
+    create_pid_dir()
     # create_db()
     update()
     install_gunicorn()
@@ -65,7 +68,6 @@ def update_requirements():
 def bower_install():
     with cd(CODE_DIR):
         run("bower install")
-
 
 def create_database(dbuser, dbname, host, password, dbmanager, dbpassword, dbhost):
     run(("echo \"CREATE DATABASE IF NOT EXISTS %s CHARACTER SET utf8 COLLATE utf8_general_ci;"
@@ -97,4 +99,3 @@ def git_pull():
 def install_gunicorn():
   with virtualenv(VIRTUALENV_PATH):
     run("pip install gunicorn==0.16.1")
-  

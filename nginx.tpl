@@ -7,7 +7,7 @@ server {
     error_log       {{ log }}/nginx.error.log;
 
     location / {
-        proxy_pass http://{{ domain }}:{{port}};
+        proxy_pass http://127.0.0.1:{{port}};
         proxy_redirect off;
 
         proxy_set_header Host $host;
@@ -20,9 +20,8 @@ server {
     }
 
     location /socket.io {
-        proxy_pass http://{{ domain }}:{{port}}/socket.io;
+        proxy_pass http://127.0.0.1:{{port}}/socket.io;
         proxy_redirect off;
-        proxy_buffering off;
 
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -33,3 +32,4 @@ server {
         proxy_set_header Connection "Upgrade";
     }
 }
+
