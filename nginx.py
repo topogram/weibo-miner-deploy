@@ -133,5 +133,4 @@ def deploy():
 
 def restart():
     # restart_worker()
-    reload_supervisor()
-    reload_webserver()
+    restart_app()
