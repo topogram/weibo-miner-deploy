@@ -4,40 +4,30 @@ Setup and deployment scripts for Topogram app.
 
 ## Deploy
 
-Tested on debian Wheezy. You will need openSSH server and mail
+Tested on Debian Wheezy.
 
-    pip install fabric fabric-virtualenv
-    fab staging ssh         # setup ssh remote key
-    fab staging hostconfig  # setup tools
-    
-    # update the config file in "config/config.py" 
-    fab staging setup_topogram  # update code and dependencies
+Edit ```config/servers.py``` and ```config/settings.py``` according to your needs.
 
-    fab staging deploy
+    pip install -r requirements
+    fab prod hostconfig # install tools on debian  
+    fab prod config_server # write nginx and gunicorn files
+    fab prod setup # install virtualenv, pip and deps
+    fab prod deploy # update code, upgrade db and reload app
 
+### Use on Virtual Box
 
-### Virtual Box
-
-    * go to Settings > Network 
+    * go to Settings > Network
     * Select NAT
-    * Then click on Port Forwarding button. 
+    * Then click on Port Forwarding button.
     * Add a new Rule: "Host port 3022, guest port 22, name ssh, other left blank."
 
-You can now ssh on the server : 
+You can now ssh on the server :
 
     ssh -p 3022 topo@127.0.0.1
     adduser topo sudo
 
 
-## Spec
-
-The Topogram application consists of three main parts :
-
-* [Data](https://github.com/topogram/topogram-data)     : data storage (bash / mongo / elasticsearch)
-* [Miner](https://github.com/topogram/topogram-miner)   : mining workflow (Python)
-* [UI](https://github.com/topogram/topogram-ui)         : visualization (Node / Javascript)
-
-## Requirements
+### Installed Deps
 
 Tested on Debian Wheezy
 
