@@ -31,19 +31,20 @@ def git_pull():
     run("git pull")
 
 def hostconfig():
-    debian.apt_upgrade()
-    debian.install_git()
-    debian.install_libs()
-    debian.install_mongodb()
-    # debian.install_elasticsearch()
-    debian.install_virtualenv()
-    debian.install_nodejs()
-    debian.install_npm_global()
-    debian.install_nginx()
-    debian.install_supervisor()
-    # debian.install_uwsgi()
-    debian.install_mysql()
-    debian.install_redis()
+    # debian.apt_upgrade()
+    # debian.install_git()
+    # debian.install_libs()
+    # debian.install_mongodb()
+    # debian.install_java()
+    debian.install_elasticsearch()
+    # debian.install_virtualenv()
+    # debian.install_nodejs()
+    # debian.install_npm_global()
+    # debian.install_nginx()
+    # debian.install_supervisor()
+    # # debian.install_uwsgi()
+    # debian.install_mysql()
+    # debian.install_redis()
 
 def setup():
     main.setup_topogram()
@@ -83,7 +84,7 @@ def install_test():
     nginx.make_gunicorn_config()
     nginx.make_supervisor_conf()
     nginx.restart_app()
-    
+
     nginx.make_nginx_vhost()
     nginx.reload_webserver()
 

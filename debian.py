@@ -34,7 +34,7 @@ def install_git():
 def install_mongodb():
   with cd(SOURCES_D):
       if not files.exists('mongodb.list'):
-          sudo('echo "deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen">mongodb.list')            
+          sudo('echo "deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen">mongodb.list')
           sudo("sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10")
           apt_update()
           apt_install("mongodb-org")
@@ -83,7 +83,10 @@ def install_elasticsearch():
 
 def install_libs():
   apt_install("install python-dev libevent-dev python-setuptools python-pip")
-  # sudo(" update-alternatives --config java")
+
+def install_java():
+    apt_install("openjdk-7-jre-headless")
+    sudo("update-alternatives --config java")
 
 def install_mysql():
   apt_install("python-mysqldb libmysqlclient-dev mysql-server")
@@ -100,7 +103,7 @@ def install_npm_global():
 
 def install_virtualenv():
     sudo_pip_install('virtualenv')
-    
+
 def sudo_pip_install(packages):
     sudo("pip install %s" % packages)
 
@@ -114,7 +117,7 @@ def install_nginx():
       apt_update()
       apt_install("nginx")
 
-      
+
       # sudo("dpkg -i nginx*")
       # sudo("service nginx start")
 
