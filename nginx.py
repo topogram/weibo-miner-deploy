@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
- 
+
 import StringIO
- 
+
 from fabric.api import *
 from fabric.operations import get, put
 from fabric.contrib.files import upload_template,exists
@@ -32,9 +32,9 @@ def make_rqworker_supervisor_conf():
     upload_template("supervisor.tpl", "%s%s.conf"%(SUPERVISOR_DIR,WORKER_NAME), context=supervisor_context, use_jinja=True, use_sudo=True,backup=False)
 
 def make_supervisor_conf():
-    
+
     # print USGWI_CONFIG_FILE
-    
+
     supervisor_context={
         'domain': VHOST_NAME,
         'log' : LOG_DIR,
@@ -43,7 +43,7 @@ def make_supervisor_conf():
         "gunicorn_conf" : GUNICORN_CONFIG_FILE,
         "VENVPATH"      : VIRTUALENV_PATH
     }
-    
+
     if not exists(SUPERVISOR_DIR):
         sudo('mkdir -p %s' % SUPERVISOR_DIR)
 
@@ -59,8 +59,8 @@ def make_nginx_vhost():
         "port" : WEBPORT
     }
 
-
-    nginx_config_file_path =  "%s%s"%(NGINX_VHOST_DIR,VHOST_NAME)
+    nginx_config_file_name = "%s.conf"%VHOST_NAME
+    nginx_config_file_path =  "%s%s"%(NGINX_VHOST_DIR,nginx_config_file_name)
     print nginx_config_file_path
     upload_template("nginx.tpl",nginx_config_file_path , context=nginx_context, use_jinja=True, use_sudo=True, backup=False)
 
@@ -104,7 +104,7 @@ def start_app():
     sudo('supervisorctl start %s' % VHOST_NAME)
 
 def restart_app():
-    sudo("killall gunicorn")
+    # sudo("killall gunicorn")
     sudo('supervisorctl start %s' % VHOST_NAME)
 
 def reload_app(touch=True):
