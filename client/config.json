@@ -1,0 +1,28 @@
+{
+    "development": {
+        "name": "topogram",
+        "url": "localhost",
+        "port": 80,
+        "email" : "hi@topogram.io",
+        "root": "/srv/www",
+        "ssh-port": 46,
+        "mongo": {
+            "host": "localhost",
+            "port": "27017",
+            "db": "topogram"
+        }
+    },
+    "production": {
+        "name": "topogram",
+        "url": "app.topogram.io",
+        "email" : "admin@localhost",
+        "port": 80,
+        "root": "/srv/www",
+        "ssh-port": 46,
+        "mongo": {
+            "host": "localhost",
+            "port": "27017",
+            "db": "topogram"
+        }
+    }
+}
