@@ -105,6 +105,9 @@ def start_app():
 
 def restart_app():
     # sudo("killall gunicorn")
+    if exists(TOPOGRAM_PID):
+        sudo ("kill -9 $(cat %s)" % TOPOGRAM_PID)
+        sudo ("rm %s" % TOPOGRAM_PID)
     sudo('supervisorctl start %s' % VHOST_NAME)
 
 def reload_app(touch=True):
