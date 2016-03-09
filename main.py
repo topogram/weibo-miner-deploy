@@ -52,7 +52,8 @@ def update():
 def update_code_from_git():
     """ download latest version of the code from git """
     if not files.exists(CODE_DIR):
-        run("git clone %s" % MAIN_GITHUB_REP )
+        with cd(HOME_DIR):
+            run("git clone %s" % MAIN_GITHUB_REP )
 
     with cd(CODE_DIR):
         git_pull()

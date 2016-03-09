@@ -1,16 +1,21 @@
 import os
 
-MAIN_GITHUB_REP="https://github.com/topogram/topogram.git"
+MAIN_GITHUB_REP="https://github.com/topogram/topogram-server.git"
 
-HOME_DIR="/home/XXX/"
+HOME_DIR="/home/topo/"
 LOG_DIR=os.path.join(HOME_DIR,"log")
-CODE_DIR=os.path.join(HOME_DIR,"topogram")
+CODE_DIR=os.path.join(HOME_DIR,"topogram-server")
 
 VIRTUALENV_PATH=os.path.join(HOME_DIR,'env')
 CONFIG_DIR=os.path.join(HOME_DIR,"config")
-VHOST_NAME = 'app.topogram.io'
+VHOST_NAME = 'topogram.host'
 STATIC = os.path.join(CODE_DIR,'app/static')
 
 RUN_DIR=os.path.join(HOME_DIR,"run")
 USGWI_SOCKET=os.path.join(RUN_DIR,"topogram.sock")
 TOPOGRAM_PID=os.path.join(RUN_DIR,"topogram.pid")
+
+UPLOADS_DIR=os.path.join(HOME_DIR,"uploads")
+DB_PATH="/var/lib/mysql/topogram"
+
+#os.path.join(HOME_DIR,'db')
