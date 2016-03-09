@@ -8,11 +8,6 @@ import debian
 import main
 import nginx
 
-CODE_DIR="/home/topo/"
-DEPLOY_FILES_DIR=os.path.join(CODE_DIR,"topogram-deploy")
-CONFIG_DIR=os.path.join(CODE_DIR,"config")
-
-CONFIG_GITHUB_REP="https://github.com/topogram/topogram-deploy.git"
 
 def uptime():
     run('uptime')
@@ -31,20 +26,20 @@ def git_pull():
     run("git pull")
 
 def hostconfig():
-    # debian.apt_upgrade()
-    # debian.install_git()
-    # debian.install_libs()
-    # debian.install_mongodb()
-    # debian.install_java()
-    debian.install_elasticsearch()
-    # debian.install_virtualenv()
-    # debian.install_nodejs()
-    # debian.install_npm_global()
-    # debian.install_nginx()
-    # debian.install_supervisor()
-    # # debian.install_uwsgi()
-    # debian.install_mysql()
-    # debian.install_redis()
+    debian.apt_upgrade()
+    debian.install_git()
+    debian.install_libs()
+    debian.install_mongodb()
+    debian.install_java()
+    # debian.install_elasticsearch()
+    debian.install_virtualenv()
+    debian.install_nodejs()
+    debian.install_npm_global()
+    debian.install_nginx()
+    debian.install_supervisor()
+    # debian.install_uwsgi()
+    debian.install_mysql()
+    debian.install_redis()
 
 def setup():
     main.setup_topogram()

@@ -23,7 +23,7 @@ def _render_template(string, context):
 
 def make_rqworker_supervisor_conf():
     supervisor_context={
-        "virtualenv" : "/home/topo/env",
+        "virtualenv" : VIRTUALENV_PATH,
         "name" : WORKER_NAME,
         "app_dir" : CODE_DIR,
         "log" : LOG_DIR
