@@ -39,7 +39,7 @@ def setup_topogram():
     update_requirements()
     create_uploads_dir()
     create_pid_dir()
-    # create_db()
+    create_db()
     update()
     install_gunicorn()
 
@@ -79,8 +79,9 @@ def create_database(dbuser, dbname, host, password, dbmanager, dbpassword, dbhos
     pass
 
 def create_db():
+    print env.mysql_user, env.mysql_db_name, env.mysql_host, env.mysql_db_password
 
-    create_database(env.mysql_user, env.mysql_db_name, env.mysql_host, env.mysql_db_password, env.mysql_user, env.mysql_db_password, env.mysql_host)
+    create_database(env.mysql_user, env.mysql_db_name, env.mysql_host, env.mysql_db_password, env.mysql_db_manager, env.mysql_db_manager_password, env.mysql_host)
 
     update_db()
 
